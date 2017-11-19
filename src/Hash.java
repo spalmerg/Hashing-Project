@@ -19,7 +19,7 @@ public class Hash {
         int size = scan.nextInt();
         scan.close();
         
-		ArrayList<String> input = readWords("/Users/sarahgreenwood/Desktop/input.txt", size);
+		ArrayList<String> input = readWords("/Users/sarahgreenwood/Desktop/input.txt");
         
         
         Hashtable<Integer, String> defaultHash = defaultHash(input, size);
@@ -34,12 +34,12 @@ public class Hash {
 		
 	}
 	
-	public static ArrayList<String> readWords(String filename, int lines) 
+	public static ArrayList<String> readWords(String filename) 
 		throws FileNotFoundException
 	{
 		ArrayList<String> words = new ArrayList<String>();
 		Scanner inp = new Scanner(new File(filename));
-		for(int i = 0; i < lines; i++) {
+		while(inp.hasNext()){
 			words.add(inp.next());
 		}
 		inp.close();
@@ -68,11 +68,11 @@ public class Hash {
 		   for(int j = 0; j < value.length(); j++) {
 				asciiSum = asciiSum + (int) value.charAt(j);
 				}
-		   if(result.get(Math.abs(asciiSum % value.length())) == null) {
-				result.put(Math.abs(asciiSum % value.length()), value);
+		   if(result.get(Math.abs(asciiSum % size)) == null) {
+				result.put(Math.abs(asciiSum % size), value);
 			}
-		   else if(result.get(Math.abs(asciiSum % value.length())) != null) {
-				result.put(Math.abs(asciiSum % value.length()), result.get(Math.abs(asciiSum % value.length())) + ", " + value);
+		   else if(result.get(Math.abs(asciiSum % size)) != null) {
+				result.put(Math.abs(asciiSum % size), result.get(Math.abs(asciiSum % size)) + ", " + value);
 			}
 	   	}
 	return result;
@@ -98,12 +98,12 @@ public class Hash {
 	
 	public static void write(String filename, Hashtable<Integer, String> hash, int size) throws FileNotFoundException, UnsupportedEncodingException{
 		PrintWriter writer = new PrintWriter(filename, "UTF-8");
-		for(int i = 1; i <= size; i++) {
+		for(int i = 0; i < size; i++) {
 			if(hash.get(i) == null) {
-				writer.println(i + ". EMPTY LINE...");
+				writer.println(i+1 + ". EMPTY LINE...\n");
 			}
 			else {
-				writer.println(i + ". " + hash.get(i));
+				writer.println(i+1 + ". " + hash.get(i) + "\n");
 			}
 		}
 		writer.close();
